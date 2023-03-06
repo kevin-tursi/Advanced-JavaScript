@@ -1,0 +1,75 @@
+What is a program? // slide 1
+
+A program has to:
+-allocate memory
+-parse and execute
+
+
+
+
+
+JavaScript Engine // slide 2
+
+-Each browser has a javascript engine to read the javascript and change it to machine executable instructions for the browser (chrome has v8)
+
+-The engine consists of:
+1) memory heap
+    - const a = 1;
+    - limited amount of memory in the memory heap
+    - MEMORY LEAKS happen when unused memory is just laying around filling up the memory heap
+        - some people say global variables are bad as they fill up the memory heap and eventually the browser wont work
+2) call stack
+    - console.log('1');
+    - what reads and executes our scripts
+    - reads the code line by line and adds code to call stack one by one
+    - removes the actions from call stack after they are called
+    - Complex example:
+        - const one = () => {
+            const two = () => {
+                console.log('4');
+            }
+            two();
+        }
+        - adds one() to call stack first then two()
+        - Order in call stack:
+            1) console.log('4');
+            2) two();
+            3) one();
+        -console logs '4' first then removes it , then runs two() then removes it, then runs one() then removes it based on the order placed into call stack
+
+
+
+
+
+-JavaScript is a single threaded language that can be non-blocking so it can only run one thing in a call stack at once
+
+
+
+
+
+// StackOverflow
+    -Recursion (a function that calls itself)
+    -function foo() {
+        foo()
+    }
+    foo() // running this gives us a stack overflow as it is Recursion
+
+
+
+
+
+// Asynchronous programming
+
+    console.log('1');
+    setTimeout(() => {
+        console.log('2');
+    }, 2000);
+    console.log('3');
+
+    // Output would be:
+        1) 1
+        2) 3
+        3) 2 - because it is set to log 2 seconds after it is called due to being inside setTimeout(), 2000
+
+
+
